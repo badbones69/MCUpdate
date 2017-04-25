@@ -1,0 +1,7 @@
+name: MCUpdate
+main: com.songoda.mcupdate.Main
+version: 1.0
+description: A test plugin for the MCUpdate class.
+commands:
+  mcupdate:
+    description: Toggle on and off the MCUpdate reports.
