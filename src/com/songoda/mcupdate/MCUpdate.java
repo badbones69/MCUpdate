@@ -1,25 +1,25 @@
 package com.songoda.mcupdate;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
 import org.bukkit.Bukkit;
-import org.bukkit.Server;
 import org.bukkit.ChatColor;
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Collection;
-import java.lang.reflect.Method;
 
 public class MCUpdate implements Listener {
 
@@ -149,7 +149,7 @@ public class MCUpdate implements Listener {
 	 * @return True if the internal updater is activated and false if not.
 	 */
 	public Boolean needsUpdated() {
-		return this.checkUpdate;
+		return checkUpdate;
 	}
 
 	/**
@@ -168,7 +168,7 @@ public class MCUpdate implements Listener {
 	 * @return The rate the data is sent in seconds.
 	 */
 	public int getPingInterval() {
-		return this.PING_INTERVAL;
+		return PING_INTERVAL;
 	}
 
 	@EventHandler
@@ -249,15 +249,19 @@ public class MCUpdate implements Listener {
 			String serverMessage = getString(endData, "message");
 			String cVersion = getString(endData, "pl_Version");
 			updateMessage = getString(endData, "update_Message");
-
-			if (!serverMessage.equals("ERROR")) {
-				if (!ver.equals(cVersion)) {
-					upToDate = false;
+			
+			if (serverMessage != null) {
+				if (!serverMessage.equals("ERROR")) {
+					if (cVersion != null) {
+						if (!ver.equals(cVersion)) {
+							upToDate = false;
+						}
+					}
 				}
 			}
 			br.close();
 
-		} catch (IOException ignored) {
+		} catch (Exception ignored) {
 		}
 	}
 
